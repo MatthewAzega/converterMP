@@ -1,5 +1,6 @@
 from pytube import YouTube
 from moviepy.editor import *
+import os
 
 def run():
     video_url = YouTube(str(input("please enter youtube url:")))
@@ -8,6 +9,8 @@ def run():
     audioStream.download()
     print(f"Download completed")
     convert_to_mp3(video_name)
+    to_delete=f"{video_name}.mp4"
+    os.remove(to_delete)
     print(f"Convert completed ---> {video_name}.mp3")
 
 def convert_to_mp3(output_file):
