@@ -40,23 +40,24 @@ def convert_streams_to_dicts(streams):
     return list_of_dicts
 
 def download_stream(yt_url):
+    identified_streams = {}
     video_url = YouTube(str(yt_url))
     streams = convert_streams_to_dicts(video_url.streams.filter(progressive=True))
     for stream in streams:
         if stream.get('res') == '1080p':
-            stream_id_1080 = stream.get('itag')
+            identified_streams['stream_id_1080'] = stream.get('itag')
         elif stream.get('res') == '720p':
-            stream_id_720 = stream.get('itag')
+            identified_streams['stream_id_720'] = stream.get('itag')
         else:
             print(f"{stream.get('res')} -- no good quality stream")
-    if stream_id_1080:
-        video_url.streams.get_by_itag(int(stream_id_1080))
+    if identified_streams.get('stream_id_1080'):
+        video_url.streams.get_by_itag(int(identified_streams.get('stream_id_1080')))
     else:
         try:
-            to_download = video_url.streams.get_by_itag(int(stream_id_720))
+            to_download = video_url.streams.get_by_itag(int(identified_streams.get('stream_id_720')))
             to_download.download()
         except VideoUnavailable:
-            print(f'Video with {stream_id_720} itag is unavailable')
+            print(f'Video with {identified_streams.get("stream_id_720")} itag is unavailable')
 
 #def get_url_from_discord
 #def push_files_to_external_storage
