@@ -28,6 +28,7 @@ def convert_streams_to_dicts(streams):
     
     for stream in streams:
         # Remove the '<Stream:' prefix and '>' suffix if present
+        stream = str(stream)
         clean_stream = stream.replace('<Stream:', '').replace('>', '').strip()
         
         # Find all matches and convert to dictionary
