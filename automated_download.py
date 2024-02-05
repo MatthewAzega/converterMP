@@ -50,6 +50,7 @@ def download_stream(yt_url):
             identified_streams['stream_id_720'] = stream.get('itag')
         else:
             print(f"{stream.get('res')} -- no good quality stream")
+    print(identified_streams)
     if identified_streams.get('stream_id_1080'):
         video_url.streams.get_by_itag(int(identified_streams.get('stream_id_1080')))
     else:
